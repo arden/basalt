@@ -18,3 +18,4 @@ main
 .vscode
 go.sum
 config/config.toml
+bitmaps.bdb
