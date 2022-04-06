@@ -15,14 +15,17 @@ func TestBitmaps_Persistence(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		v := uint32(rand.Int31())
 		values1 = append(values1, v)
-		bms.Add("test1", v)
+		bms.Add("test1", v,true)
 	}
 	var values2 []uint32
 	for i := 0; i < 100; i++ {
 		v := uint32(rand.Int31())
 		values2 = append(values2, v)
-		bms.Add("test2", v)
+		bms.Add("test2", v,true)
 	}
+
+	length := bms.Card("test2")
+	println(length)
 
 	err := bms.Save(buf)
 	if err != nil {

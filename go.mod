@@ -3,8 +3,10 @@ module github.com/rpcxio/basalt
 go 1.14
 
 require (
-	github.com/RoaringBitmap/roaring v0.4.21
-	github.com/go-redis/redis v6.15.7+incompatible
+	github.com/RoaringBitmap/roaring v0.9.4
+	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/go-redis/redis/v8 v8.11.5
+	github.com/gogf/gf/v2 v2.0.4
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/rpcxio/etcd v0.0.0-20200729120139-f9cde972fd94
 	github.com/smallnest/log v0.0.0-20190128090703-5dc5752d8772

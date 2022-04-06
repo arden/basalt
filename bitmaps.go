@@ -66,7 +66,7 @@ func (bs *Bitmaps) Add(name string, v uint32, callback bool) {
 // AddMany adds multiple values.
 func (bs *Bitmaps) AddMany(name string, v []uint32, callback bool) {
 	if bs.writeCallback != nil && callback {
-		bs.writeCallback(BmOpAddMany, fmt.Sprintf("%s,%d", name, ints2str(v)))
+		bs.writeCallback(BmOpAddMany, fmt.Sprintf("%s,%s", name, ints2str(v)))
 		return
 	}
 

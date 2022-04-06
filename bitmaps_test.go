@@ -12,7 +12,7 @@ func TestBitmaps_Basic(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		v := uint32(rand.Int31())
 		values = append(values, v)
-		bms.Add("test", v)
+		bms.Add("test", v, true)
 	}
 
 	for _, v := range values {
@@ -22,7 +22,7 @@ func TestBitmaps_Basic(t *testing.T) {
 	}
 
 	for _, v := range values {
-		bms.Remove("test", v)
+		bms.Remove("test", v, true)
 	}
 
 	for _, v := range values {
@@ -32,7 +32,7 @@ func TestBitmaps_Basic(t *testing.T) {
 	}
 
 	for i := 0; i < 10; i++ {
-		bms.AddMany("test", values[i*10:i*10+10])
+		bms.AddMany("test", values[i*10:i*10+10],true)
 	}
 	for _, v := range values {
 		if !bms.Exists("test", v) {
@@ -49,8 +49,8 @@ func TestBitmaps_Basic(t *testing.T) {
 func TestBitmaps_Inter(t *testing.T) {
 	bms := NewBitmaps()
 
-	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11})
-	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21})
+	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11}, true)
+	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21}, true)
 
 	result := bms.Inter("test1", "test2")
 	if result[0] != 1 || result[1] != 2 || result[2] != 3 {
@@ -61,8 +61,8 @@ func TestBitmaps_Inter(t *testing.T) {
 func TestBitmaps_Union(t *testing.T) {
 	bms := NewBitmaps()
 
-	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11})
-	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21})
+	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11},true)
+	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21},true)
 
 	result := bms.Union("test1", "test2")
 	if len(result) != 7 || result[0] != 1 || result[1] != 2 || result[2] != 3 ||
@@ -75,8 +75,8 @@ func TestBitmaps_Union(t *testing.T) {
 func TestBitmaps_Xor(t *testing.T) {
 	bms := NewBitmaps()
 
-	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11})
-	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21})
+	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11},true)
+	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21},true)
 
 	result := bms.Xor("test1", "test2")
 	if len(result) != 4 || result[0] != 10 || result[1] != 11 || result[2] != 20 || result[3] != 21 {
@@ -87,8 +87,8 @@ func TestBitmaps_Xor(t *testing.T) {
 func TestBitmaps_Diff(t *testing.T) {
 	bms := NewBitmaps()
 
-	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11})
-	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21})
+	bms.AddMany("test1", []uint32{1, 2, 3, 10, 11},true)
+	bms.AddMany("test2", []uint32{1, 2, 3, 20, 21},true)
 
 	result := bms.Diff("test1", "test2")
 	if len(result) != 2 || result[0] != 10 || result[1] != 11 {

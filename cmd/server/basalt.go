@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"flag"
+	"github.com/gogf/gf/v2/os/gcron"
 	"log"
 	"os"
 
@@ -25,7 +27,6 @@ func main() {
 	}
 
 	bitmaps := basalt.NewBitmaps()
-
 	srv := basalt.NewServer(*addr, bitmaps, nil, *dataFile)
 	err := srv.Restore()
 	if err != nil {
@@ -33,6 +34,15 @@ func main() {
 	} else {
 		log.Printf("succeeded to restore bitmaps from %s", *dataFile)
 	}
+
+	// 每隔 1 秒保存数据到磁盘
+	_, _ = gcron.Add(context.Background(),"*/1 * * * * *", func(ctx context.Context) {
+		err := srv.Save()
+		if err != nil {
+			println(err.Error())
+			return
+		}
+	})
 
 	if err := srv.Serve(); err != nil {
 		log.Fatalf("failed to start basalt services:%v", err)
